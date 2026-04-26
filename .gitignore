@@ -1,0 +1,100 @@
+# ========================
+# 🛑 CRITICAL SECURITY
+# ========================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+
+# ========================
+# 💻 OS & IDE Files (Junk)
+# ========================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*.iml
+.classpath
+.project
+.settings/
+
+# ========================
+# ☕ Java / Spring Boot
+# ========================
+target/
+*.class
+*.jar
+*.war
+*.ear
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+# Gradle
+.gradle/
+build/
+
+# ========================
+# 🟢 Node.js (React, Express, Etc)
+# ========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ========================
+# ⚛️ React / Next.js
+# ========================
+# Next.js build output
+.next/
+out/
+# Production build
+build/
+dist/
+
+# ========================
+# 🅰️ Angular
+# ========================
+.angular/
+# Angular default build output
+dist/
+
+# ========================
+# 🐍 Python / Django / Flask
+# ========================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# ========================
+# 🐳 Docker
+# ========================
+# Only ignore docker-compose override (local dev settings)
+docker-compose.override.yml
+__pycache__/
+*.pyc
+db.sqlite3
+media/
+venv/
+.env

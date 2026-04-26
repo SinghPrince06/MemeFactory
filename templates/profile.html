@@ -1,0 +1,156 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+	<title>Profile - {{user_profile.user.username}}</title>
+   <!-- <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16"> -->
+    
+    <link rel="stylesheet" href="{% static 'assets/css/main.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style1.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+
+</head>
+<body>
+<!--<div class="se-pre-con"></div>-->
+<div class="theme-layout">
+	
+	</div>
+	
+	<section>
+			<div class="feature-photo">
+				<figure>
+				<img src="{{ user_profile.banner.url }}"></figure>
+				
+				<div class="container-fluid">
+					<div class="row merged">
+						<div class="col-lg-2 col-sm-3">
+							<div class="user-avatar">
+								<figure>
+									<img src="{{user_profile.profileimg.url}}" style="height: 250px; width: 100%;" alt="">
+								</figure>
+							</div>
+						</div>
+						<div class="col-lg-10 col-sm-9">
+							<div class="timeline-info">
+								<div class="admin-name">
+									<h5>@{{user_profile.user.username}}</h5>
+								</div>
+							<form action="/follow" method="POST">
+							{% csrf_token %}
+								<div class="add-btn">
+									<a href="/" class="nav-link">Home</a>
+
+									{% if user_post_length == 0 %}
+										<span>No Post</span>
+									{% elif user_post_length == 1 %}
+										<span>{{user_post_length}} Post</span>
+									{% else %}
+										<span>{{user_post_length}} Posts</span>
+									{% endif %}
+
+									{% if user_followers == 0 %}
+										<span>No Follower</span>
+									{% elif user_followers == 1 %}
+										<span>1 Follower</span>
+									{% else %}
+										<span>{{user_followers}} Followers</span>
+									{% endif %}
+
+									{% if user_following == 0 %}
+										<span>No Following</span>
+									{% elif user_following == 1 %}
+										<span>1 Following</span>
+									{% else %}
+										<span>{{user_followers}} Followings</span>
+									{% endif %}
+
+									<input type="hidden" value="{{user.username}}" name="follower">
+									<input type="hidden" value="{{user_profile.user.username}}" name="user">
+									{% if user_object.username == user.username%}
+									<a href="/settings" data-ripple="">Account Settings</a>
+									{% else %}
+									<button type="submit" class="follow-btn">{{button_text}}</button>
+									{% endif %}
+								</div>
+							</form>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section><!-- top area -->
+		<section>
+			<div class="bio">
+				{{user_profile.bio}}
+			</div>
+		</section>
+		
+	<section>
+		<div class="gap gray-bg">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="row" id="page-contents">
+							<div class="col-lg-3">
+								<aside class="sidebar static">
+									
+									
+									
+								</aside>
+							</div><!-- sidebar -->
+							
+
+
+
+
+
+
+
+
+
+							<div class="col-lg-6">
+								<div class="photo-scroll">
+									<div class="photo-grid">
+										{% for post in user_posts %}
+										<div class="photo-item">
+											<a href="{{ post.image.url }}" target="_blank">
+												<img src="{{ post.image.url }}" alt="">
+											</a>
+										</div>
+										{% endfor %}
+									</div>
+								</div><!-- photos -->
+							</div><!-- centerl meta -->
+							<div class="col-lg-3">
+								<aside class="sidebar static">
+								
+								</aside>
+							</div><!-- sidebar -->
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>	
+	</section>
+
+	
+	
+	<!-- <script data-cfasync="false" src="{% static '../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script> -->
+	{% load static %}
+
+	<script src="{% static 'assets/js/main.min.js' %}"></script>
+	<script src="{% static 'assets/js/script.js' %}"></script>
+
+</body>	
+
+
+</html>

@@ -1,0 +1,10 @@
+{% for profile in profiles %}
+    <div>
+        <a href="/profile/{{ profile.user.username }}">
+            <img src="{{ profile.profileimg.url }}" width="40">
+            <span>{{ profile.user.username }}</span>
+        </a>
+    </div>
+{% empty %}
+    <p>No users found</p>
+{% endfor %}
