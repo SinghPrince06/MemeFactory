@@ -19,10 +19,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import redirect
+from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('core.urls')),
-    path('', lambda request: redirect('/signin'))
+    path('', include('core.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
