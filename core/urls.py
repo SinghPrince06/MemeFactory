@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('', views.signin, name='home'),
     path('settings/', views.settings, name='settings'),
     path('upload/', views.upload, name='upload'),
     path('delete-post/', views.delete_post, name='delete_post'),
