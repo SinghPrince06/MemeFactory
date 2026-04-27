@@ -60,7 +60,7 @@
                     {% endfor %}
                 </div>
 
-                <form action="" method='POST'>
+                <form action="/signin/" method='POST'>
                     {% csrf_token %}
                     <input type="text" name="username" placeholder="Username" class="bg-gray-200 mb-2 shadow-none dark:bg-gray-800" style="border: 1px solid #d3d5d8 !important;">
                     <div style="position: relative; width: 100%;">
@@ -80,7 +80,7 @@
                     </div> -->
                     <button type="submit" class="bg-gradient-to-br from-pink-500 py-3 rounded-md text-white text-xl to-red-400 w-full">Login</button>
                     <div class="text-center mt-5 space-x-2">
-                        <p class="text-base"> Not registered? <a href="/signup" class=""> Create a account </a></p>
+                        <p class="text-base"> Don't have a account? <a href="/signup" class=""> Create account </a></p>
                     </div>
                 </form>
             </div>
@@ -147,6 +147,18 @@
     <script src="{% static 'assets/js/uikit.js' %}"></script>
     <script src="{% static 'assets/js/simplebar.js' %}"></script>
     <script src="{% static 'assets/js/custom.js' %}"></script>
+    
+    <script>
+        function togglePassword(fieldName) {
+            const input = document.querySelector(`input[name="${fieldName}"]`);
+
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+    </script>
 
 
 </body>

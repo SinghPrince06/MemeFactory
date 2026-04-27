@@ -12,8 +12,10 @@ from django.db.models import Case, When, Value, IntegerField
 import random
 # Create your views here.
 
-@login_required(login_url='signin')
+@login_required
 def index(request):
+    print(request.user)
+    print(request.user.is_authenticated)
     user = request.user.username
 
     user_object = User.objects.get(username=user)
@@ -45,6 +47,8 @@ def index(request):
     suggestions = Profile.objects.exclude(
         user__username=user
     )[:6]
+
+
     return render(request, 'index.html', {
         'user_profile': user_profile,
         'posts': posts,
@@ -284,6 +288,7 @@ def signup(request):
         return render(request, 'signup.html')
 
 def signin(request):
+    print("SIGNIN HIT")
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
