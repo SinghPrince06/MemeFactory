@@ -28,8 +28,14 @@ SECRET_KEY = 'django-insecure-+n4qu4dcxhij9bx)glu6g2870g!te^_phwja9dc3p-!ai=a17t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['onrender.com']
-CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
+ALLOWED_HOSTS = [
+    'memefactory-dwu4.onrender.com',
+    'localhost',
+    '127.0.0.1'
+]
+CSRF_TRUSTED_ORIGINS = [
+    'https://memefactory-dwu4.onrender.com'
+]
 
 
 # Application definition
