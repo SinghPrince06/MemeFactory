@@ -9,7 +9,7 @@ from core.models import Profile
 from itertools import chain
 from .models import FavouritePost, ReportPost
 from django.db.models import Case, When, Value, IntegerField
-import random
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 @login_required
@@ -33,7 +33,7 @@ def index(request):
     if user_favourite_post_id:
         posts = posts.annotate(
             is_fav=Case(
-                When(id=str(user_favourite_post_id), then=Value(0)),
+                When(id=user_favourite_post_id, then=Value(0)),
                 default=Value(1),
                 output_field=IntegerField(),
             )
@@ -42,7 +42,7 @@ def index(request):
     posts = list(posts)
 
     for post in posts:
-        post.author_profile = Profile.objects.get(user__username=post.user)
+        post.author_profile = Profile.objects.filter(user__username=post.user).first()
 
     suggestions = Profile.objects.exclude(
         user__username=user
