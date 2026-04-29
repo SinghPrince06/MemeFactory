@@ -26,7 +26,7 @@ LOGIN_URL = '/signin/'
 SECRET_KEY = 'django-insecure-+n4qu4dcxhij9bx)glu6g2870g!te^_phwja9dc3p-!ai=a17t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 

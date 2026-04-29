@@ -231,7 +231,7 @@
                                                 style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                         </div>
                                     </a>
-                                    <span class="block capitalize font-semibold "> <a href="{% url 'proifile' post.user %}">@{{post.user}}</a> </span>
+                                    <span class="block capitalize font-semibold "> <a href="{% url 'profile' post.user %}">@{{post.user}}</a> </span>
                                 </div>
                               <div>
                                 <a href="#"> <i class="icon-feather-more-horizontal text-2xl hover:bg-gray-200 rounded-full p-2 transition -mr-1 "></i> </a>
@@ -262,7 +262,7 @@
                                         {% if post.user == user.username %}
 
                                         <li>
-                                            <form action="{% url 'delete-post' %}" method="POST" onsubmit="return confirmDelete(this);">
+                                            <form action="{% url 'delete_post' %}" method="POST" onsubmit="return confirmDelete(this);">
                                                 {% csrf_token %}
                                                 <input type="hidden" name="post_id" value="{{ post.id }}">
 
