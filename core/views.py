@@ -10,6 +10,11 @@ from itertools import chain
 from .models import FavouritePost, ReportPost
 from django.db.models import Case, When, Value, IntegerField
 from django.shortcuts import get_object_or_404
+import base64
+from django.core.files.base import ContentFile
+import uuid
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from io import BytesIO
 # Create your views here.
 
 @login_required
@@ -41,8 +46,10 @@ def index(request):
 
     posts = list(posts)
 
+    profiles = {p.user.username: p for p in Profile.objects.all()}
+
     for post in posts:
-        post.author_profile = Profile.objects.filter(user__username=post.user).first()
+        post.author_profile = profiles.get(post.user)
         
     suggestions = Profile.objects.exclude(
         user__username=user
@@ -57,23 +64,49 @@ def index(request):
         'user_favourite_post_id': user_favourite_post_id,
     })
 
+import uuid
+
 @login_required(login_url='signin')
 def upload(request):
     if request.method == 'POST':
         user = request.user.username
-        image = request.FILES.get('upload_image')
-        caption = request.POST['caption']
+        image_data = request.POST.get('final_image')
+        image = None
 
-        #stops empty posts
+        if image_data and 'base64,' in image_data:
+            try:
+                format, imgstr = image_data.split(';base64,')
+                ext = format.split('/')[-1]
+
+                decoded_image = base64.b64decode(imgstr)
+                image_file = BytesIO(decoded_image)
+
+                image = InMemoryUploadedFile(
+                    image_file,
+                    None,
+                    f'meme_{uuid.uuid4()}.{ext}',
+                    'image/jpeg',
+                    len(decoded_image),
+                    None
+                )
+            except Exception as e:
+                print("Base64 Error:", e)
+                image = None
+
         if image is None:
-            return redirect('/')   # or show error message
+            image = request.FILES.get('upload_image')
 
-        new_post = Post.objects.create(user=user, image=image, caption=caption)
-        new_post.save()
+        caption = request.POST.get('caption')
+
+        if image is None:
+            print("No image received")
+            return redirect('/')
+
+        Post.objects.create(user=user, image=image, caption=caption)
 
         return redirect('/')
-    else : 
-        return redirect('/')
+
+    return redirect('/')
 
 @login_required(login_url='signin')
 def delete_post(request):

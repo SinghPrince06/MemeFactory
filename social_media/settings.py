@@ -26,7 +26,7 @@ LOGIN_URL = '/signin/'
 SECRET_KEY = 'django-insecure-+n4qu4dcxhij9bx)glu6g2870g!te^_phwja9dc3p-!ai=a17t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
@@ -161,3 +161,6 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '746844936693714',
     'API_SECRET': 'mXTxexvFuKvE5ykWohaLp4plm4s',
 }
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20971520  # 20 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 20971520
