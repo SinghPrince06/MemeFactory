@@ -47,7 +47,7 @@
 
             <header>
                 <div class="header_inner">
-                    <form action="/search" method="GET" style="display:flex; align-items:center; gap:10px;">
+                    <form action="/search/" method="GET" style="display:flex; align-items:center; gap:10px;">
                         <div style="position: relative; width: 300px;">
                             
                             <input type="text" id="searchBox" name="username"
@@ -91,7 +91,7 @@
                                             <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
                                         </svg>
                                     </div>
-                                    <form action="upload" method="POST" enctype="multipart/form-data">
+                                    <form action="/upload/" method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <p class="my-3 leading-6"> Upload Memes <br>
                                     </p>
@@ -192,7 +192,11 @@
                         <!-- profile -->
 
                         <a href="#">
-                            <img src="{{user_profile.profileimg.url}}" class="header-avatar" alt="">
+                            {% if user_profile.profileimg %}
+                                <img src="{{ user_profile.profileimg.url }}" class="header-avatar" alt="">
+                            {% else %}
+                                <img src="{% static 'assets/images/avatar-1.jpg' %}" class="header-avatar" alt="">
+                            {% endif %}
                         </a>
                     <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
                         <ul>
@@ -227,8 +231,13 @@
                                             <!-- <img src="{{ user_profile.profileimg.url }}" class="bg-gray-200 border border-white rounded-full w-8 h-8"> -->
                                             {% load static %}
 
-                                            <img src="{{ post.author_profile.profileimg.url }}"
-                                                style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                            {% if post.author_profile and post.author_profile.profileimg %}
+                                                <img src="{{ post.author_profile.profileimg.url }}"
+                                                    style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                            {% else %}
+                                                <img src="{% static 'assets/images/avatar-1.jpg' %}"
+                                                    style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                            {% endif %}
                                         </div>
                                     </a>
                                     <span class="block capitalize font-semibold "> <a href="{% url 'profile' post.user %}">@{{post.user}}</a> </span>
@@ -397,8 +406,13 @@
                                 <a href="{% url 'profile' suggestion.user.username}" 
                                 class="flex items-center gap-3">
 
-                                    <img src="{{ suggestion.profileimg.url }}" 
-                                        class="w-10 h-10 rounded-full object-cover">
+                                    {% if suggestion.profileimg %}
+                                        <img src="{{ suggestion.profileimg.url }}" 
+                                            class="w-10 h-10 rounded-full object-cover">
+                                    {% else %}
+                                        <img src="{% static 'assets/images/avatar-1.jpg' %}" 
+                                            class="w-10 h-10 rounded-full object-cover">
+                                    {% endif %}
 
                                     <span class="font-semibold">
                                         {{ suggestion.user.username }}
@@ -628,7 +642,7 @@
 
 
         function goProfile(username) {
-            window.location.href = `/profile/${username}`;
+            window.location.href = `/profile/${username}/`;
         }
     </script>
     <script>

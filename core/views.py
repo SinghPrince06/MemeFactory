@@ -43,7 +43,6 @@ def index(request):
 
     for post in posts:
         post.author_profile = Profile.objects.filter(user__username=post.user).first()
-        post.author_profile = profile
         
     suggestions = Profile.objects.exclude(
         user__username=user
