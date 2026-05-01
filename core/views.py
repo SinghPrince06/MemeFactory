@@ -210,8 +210,8 @@ def report_post(request):
 
 @login_required(login_url='signin')
 def profile(request, pk):
-    user_object = User.objects.get(username=pk)
-    user_profile = Profile.objects.get(user=user_object)
+    user_object = get_object_or_404(User, username=pk)
+    user_profile = get_object_or_404(Profile, user=user_object)
     user_posts = Post.objects.filter(user=pk)
     user_post_length = len(user_posts)
 
@@ -235,7 +235,9 @@ def profile(request, pk):
         'user_followers': user_followers,
         'user_following': user_following,
     }
-    return render(request, 'profile.html', context)
+    return render(request, 'profile.html', {
+        'user_profile': user_profile,
+    }, context)
 
 @login_required(login_url='signin')
 def follow(request):
@@ -344,6 +346,9 @@ def search(request):
 
     return render(request, 'search.html', {'profiles': profiles})
 
+def post_detail(request, id):
+    post = get_object_or_404(Post, id=id)
+    return render(request, 'post_detail.html', {'post': post})
 
 @login_required(login_url='signin')
 def search_ajax(request):

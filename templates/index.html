@@ -315,25 +315,28 @@
                                 <a href="#"> <i class="icon-feather-more-horizontal text-2xl hover:bg-gray-200 rounded-full p-2 transition -mr-1 "></i> </a>
                                 <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-gray-500 hidden text-base border border-gray-100" uk-drop="mode: click; pos: top-right">
                                     <ul class="space-y-1">
-                                      <li> 
-                                          <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md ">
-                                           <i class="uil-share-alt mr-1"></i> Share
-                                          </a> 
-                                      </li>
-                                    <form action="{% url 'favourite' %}" method="POST">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="post_id" value="{{ post.id }}">
+                                    <li>
+                                        <button onclick="sharePost('{{ post.id }}')"
+                                            class="flex items-center px-3 py-2 hover:bg-gray-200 rounded-md w-full text-left">
+                                            <i class="uil-share-alt mr-1"></i> Share
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <form action="{% url 'favourite' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="post_id" value="{{ post.id }}">
 
-                                        {% if post.id|stringformat:"s" == user_favourite_post_id %}
-                                            <button type="submit" class="flex items-center px-3 py-2 text-yellow-500">
-                                                ⭐ Remove Favourite
-                                            </button>
-                                        {% else %}
-                                            <button type="submit" class="flex items-center px-3 py-2">
-                                                ☆ Add Favourite
-                                            </button>
-                                        {% endif %}
-                                    </form>
+                                            {% if post.id|stringformat:"s" == user_favourite_post_id %}
+                                                <button type="submit" class="flex items-center px-3 py-2 w-full text-left hover:bg-gray-200 rounded-md text-yellow-500">
+                                                    ⭐ Remove Favourite
+                                                </button>
+                                            {% else %}
+                                                <button type="submit" class="flex items-center px-3 py-2 w-full text-left hover:bg-gray-200 rounded-md">
+                                                    ☆ Add Favourite
+                                                </button>
+                                            {% endif %}
+                                        </form>
+                                    </li>
                                       <li>
                                         <hr class="-mx-2 my-2 ">
                                       </li>
@@ -472,7 +475,7 @@
 
                             <div class="px-4 py-3 flex items-center justify-between">
 
-                                <a href="{% url 'profile' suggestion.user.username}" 
+                                <a href="{% url 'profile' suggestion.user.username %}" 
                                 class="flex items-center gap-3">
 
                                     {% if suggestion.profileimg %}
@@ -856,8 +859,7 @@
             let file = e.target.files[0];
 
             if(file){
-                // change label text
-                this.parentElement.innerText = "✅ " + file.name;
+                this.parentElement.childNodes[0].nodeValue = "✅ " + file.name;
 
                 let reader = new FileReader();
                 reader.onload = function(event){
@@ -938,6 +940,33 @@
         }
 
     });
+    </script>
+    <script>
+        function sharePost(postId){
+            let base = window.location.hostname === "127.0.0.1"
+                ? "https://memefactory-dwu4.onrender.com"
+                : window.location.origin;
+
+            let url = `${base}/post/${postId}/`;
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url)
+                    .then(() => alert("Link copied!"))
+                    .catch(() => fallbackCopy(url));
+            } else {
+                fallbackCopy(url);
+            }
+        }
+
+        function fallbackCopy(text){
+            let temp = document.createElement("input");
+            temp.value = text;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand("copy");
+            document.body.removeChild(temp);
+            alert("Link copied!");
+        }
     </script>
 </body>
 
