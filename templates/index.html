@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/impact');
+    </style>
 </head>
 
 <body>
@@ -554,7 +557,13 @@
 
 
 
-
+<select id="fontSelect" style="width:100%; margin-top:8px;">
+    <option value="Impact">Meme (Impact)</option>
+    <option value="Anton">Modern</option>
+    <option value="Arial Black">Bold</option>
+    <option value="Poppins">Clean</option>
+    <option value="TT Livret Subhead Trl">Aesthetic</option>
+</select>
 
 
 
@@ -776,55 +785,95 @@
         }
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", function(){
+    document.addEventListener("DOMContentLoaded", function(){
 
-            let canvas = document.getElementById("memeCanvas");
-            let ctx = canvas.getContext("2d");
-            let image = new Image();
-
-            document.getElementById("imageInput").onchange = function(e){
-                let reader = new FileReader();
-                reader.onload = function(event){
-                    image.src = event.target.result;
-                }
-                reader.readAsDataURL(e.target.files[0]);
-            };
-
-            window.generateMeme = function(){
-                if(!image.src){
-                    alert("Select image first");
-                    return;
-                }
-
-                canvas.width = image.width;
-                canvas.height = image.height;
-
-                ctx.drawImage(image, 0, 0);
-
-                ctx.fillStyle = "white";
-                ctx.strokeStyle = "black";
-                ctx.lineWidth = 3;
-                ctx.textAlign = "center";
-
-                let topText = document.getElementById("topText").value;
-                let bottomText = document.getElementById("bottomText").value;
-
-                ctx.font = "40px Impact";
-
-                ctx.fillText(topText, canvas.width/2, 50);
-                ctx.strokeText(topText, canvas.width/2, 50);
-
-                ctx.fillText(bottomText, canvas.width/2, canvas.height - 20);
-                ctx.strokeText(bottomText, canvas.width/2, canvas.height - 20);
-            }
-
-            window.prepareUpload = function(){
-                generateMeme();
-                let dataURL = canvas.toDataURL("image/jpeg", 0.7);
-                document.getElementById("finalImage").value = dataURL;
-            }
-
+        document.fonts.ready.then(() => {
+            console.log("Fonts loaded");
         });
+
+        let canvas = document.getElementById("memeCanvas");
+        let ctx = canvas.getContext("2d");
+        let image = new Image();
+
+        document.getElementById("imageInput").onchange = function(e){
+            let reader = new FileReader();
+            reader.onload = function(event){
+                image.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        };
+
+        function drawText(ctx, text, x, y, maxWidth){
+            text = text.toUpperCase();
+
+            let fontSize = 50;
+            let selectedFont = document.getElementById("fontSelect").value;
+            ctx.font = `bold ${fontSize}px "${selectedFont}", "Arial Black", sans-serif`;
+
+            while(ctx.measureText(text).width > maxWidth){
+                fontSize -= 2;
+                let selectedFont = document.getElementById("fontSelect").value;
+                ctx.font = `bold ${fontSize}px "${selectedFont}", "Arial Black", sans-serif`;
+            }
+
+            let words = text.split(" ");
+            let lines = [];
+            let line = "";
+
+            for(let i=0; i<words.length; i++){
+                let testLine = line + words[i] + " ";
+                let width = ctx.measureText(testLine).width;
+
+                if(width > maxWidth && i > 0){
+                    lines.push(line);
+                    line = words[i] + " ";
+                } else {
+                    line = testLine;
+                }
+            }
+            lines.push(line);
+
+            lines.forEach((l, i) => {
+                let lineY = y + (i * fontSize * 1.1);
+
+                ctx.strokeText(l, x, lineY);
+                ctx.fillText(l, x, lineY);
+            });
+        }
+
+        window.generateMeme = function(){
+            if(!image.src){
+                alert("Select image first");
+                return;
+            }
+
+            canvas.width = image.width;
+            canvas.height = image.height;
+
+            ctx.drawImage(image, 0, 0);
+
+            ctx.fillStyle = "white";
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 8;
+            ctx.lineJoin = "round";
+            ctx.textAlign = "center";
+            ctx.shadowColor = "black";
+            ctx.shadowBlur = 2;
+
+            let topText = document.getElementById("topText").value;
+            let bottomText = document.getElementById("bottomText").value;
+
+            drawText(ctx, topText, canvas.width/2, 60, canvas.width - 40);
+            drawText(ctx, bottomText, canvas.width/2, canvas.height - 100, canvas.width - 40);
+        }
+
+        window.prepareUpload = function(){
+            generateMeme();
+            let dataURL = canvas.toDataURL("image/jpeg", 0.7);
+            document.getElementById("finalImage").value = dataURL;
+        }
+
+    });
     </script>
 </body>
 
