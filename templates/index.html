@@ -70,8 +70,7 @@
                     </form>
                     <div class="right-side lg:pr-4">
                          <!-- upload -->
-                        <a href="#"
-                            class="bg-pink-500 flex font-bold hidden hover:bg-pink-600 hover:text-white inline-block items-center lg:block max-h-10 mr-4 px-4 py-2 rounded shado text-white">
+                        <a href="#" class="bg-pink-500 flex font-bold hover:bg-pink-600 hover:text-black text-white px-4 py-2 rounded">
                             <ion-icon name="add-circle" class="-mb-1
                              mr-1 opacity-90 text-xl uilus-circle"></ion-icon> Upload Memes
                         </a>
@@ -88,36 +87,90 @@
                             <!-- notification contents -->
                             <div class="flex justify-center flex-center text-center">
     
-                                <div class="flex flex-col choose-upload text-center">
+                                <div class="flex flex-col choose-upload text-center"
+                                    style="background:white; padding:15px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1);">
                                    
-                                    <div class="bg-gray-100 border-2 border-dashed flex flex-col h-24 items-center justify-center relative w-full rounded-lg  ">
+                                   <!-- <div class="bg-gray-100 border-2 border-dashed flex flex-col h-24 items-center justify-center relative w-full rounded-lg  ">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12">
                                             <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z" />
                                             <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
                                         </svg>
-                                    </div>
+                                    </div>-->
                                     <form action="/upload/" method="POST" >
                                     {% csrf_token %}
-                                    <input type="file" id="imageInput" name="upload_image" accept="image/*">
 
-                                    <input type="text" id="topText" placeholder="Top Text" style="width:100%; margin-top:8px;">
-                                    <input type="text" id="bottomText" placeholder="Bottom Text" style="width:100%; margin-top:5px;">
+                                    <label style="
+                                        display:block;
+                                        padding:15px;
+                                        border:2px dashed #ccc;
+                                        border-radius:12px;
+                                        text-align:center;
+                                        cursor:pointer;
+                                        background:#fafafa;
+                                        margin-top:10px;
+                                    ">
+                                        📤 Click to upload image
+                                        <input type="file" id="imageInput" name="upload_image" accept="image/*" style="display:none;">
+                                    </label>
 
-                                    <canvas id="memeCanvas" style="max-width:100%; margin-top:10px;"></canvas>
+                                    <input type="text" id="topText" placeholder="Top Text"
+                                        style="width:100%; padding:12px; border-radius:10px; border:1px solid #ddd; margin-top:10px; outline:none;">
+
+                                    <input type="text" id="bottomText" placeholder="Bottom Text"
+                                        style="width:100%; padding:12px; border-radius:10px; border:1px solid #ddd; margin-top:8px; outline:none;">
+                                    
+                                    <select id="fontSelect" style="width:100%; margin-top:8px;">
+                                        <option value="Impact">Meme (Impact)</option>
+                                        <option value="Anton">Modern</option>
+                                        <option value="Arial Black">Bold</option>
+                                        <option value="Poppins">Clean</option>
+                                        <option value="TT Livret Subhead Trl">Aesthetic</option>
+                                    </select>
+
+                                    <canvas id="memeCanvas" style="
+                                        width:100%;
+                                        margin-top:15px;
+                                        border-radius:12px;
+                                        border:2px dashed #ddd;
+                                        background:#f9f9f9;
+                                    "></canvas>
 
                                     <input type="hidden" name="final_image" id="finalImage">
 
-                                    <textarea name="caption" placeholder="caption....." style="margin-top:10px;"></textarea>
+                                    <textarea name="caption" placeholder="Write a caption..."
+                                        style="width:100%; padding:12px; border-radius:10px; border:1px solid #ddd; margin-top:10px; outline:none;"></textarea>
 
                                     <br>
 
-                                    <button type="button" onclick="generateMeme()" class="button soft-warning small">
-                                        Preview Meme
-                                    </button>
+                                    <div style="display:flex; gap:10px; margin-top:15px;">
 
-                                    <button type="submit" onclick="prepareUpload()" class="button bg-blue-700">
-                                        Upload
-                                    </button>
+                                        <button type="button" onclick="generateMeme()" style="
+                                            flex:1;
+                                            padding:12px;
+                                            border-radius:10px;
+                                            background: linear-gradient(135deg, #ff4b7d, #ff7aa2);
+                                            color:white;
+                                            font-weight:600;
+                                            border:none;
+                                            cursor:pointer;
+                                        ">
+                                            ✨ Preview Meme
+                                        </button>
+
+                                        <button type="submit" onclick="prepareUpload()" style="
+                                            flex:1;
+                                            padding:12px;
+                                            border-radius:10px;
+                                            background: linear-gradient(135deg, #ff0055, #ff4b7d);
+                                            color:white;
+                                            font-weight:600;
+                                            border:none;
+                                            cursor:pointer;
+                                        ">
+                                            🚀 Upload
+                                        </button>
+
+                                    </div>
                                     </form>
     
                                     <!-- <a href="#" class="uk-text-muted mt-3 uk-link"
@@ -146,7 +199,7 @@
     
                             </div>
                             <div class="px-4 py-3 -mx-5 -mb-4 mt-5 border-t text-sm">
-                                The maximum size limit is 99MB
+                                Maximum size limit is 20MB
                             </div>
                         </div>
                         
@@ -557,15 +610,6 @@
 
 
 
-<select id="fontSelect" style="width:100%; margin-top:8px;">
-    <option value="Impact">Meme (Impact)</option>
-    <option value="Anton">Modern</option>
-    <option value="Arial Black">Bold</option>
-    <option value="Poppins">Clean</option>
-    <option value="TT Livret Subhead Trl">Aesthetic</option>
-</select>
-
-
 
  <!-- Scripts
     ================================================== -->
@@ -582,29 +626,42 @@
         let isProcessing = false;
 
         function likePost(postId) {
-            if (isProcessing) return;
-            isProcessing = true;
+        let likesEl = document.getElementById(`likes-${postId}`);
+        let btn = document.getElementById(`like-btn-${postId}`);
 
-            fetch(`/like-post?post_id=${postId}`)
+        let currentText = likesEl.innerText;
+        let currentLikes = parseInt(currentText.match(/\d+/)) || 0;
+
+        let alreadyLiked = btn.style.color === "blue";
+
+        if (alreadyLiked) {
+            currentLikes--;
+            btn.style.color = "black";
+        } else {
+            currentLikes++;
+            btn.style.color = "blue";
+        }
+
+        likesEl.innerText =
+            currentLikes === 0 ? "No likes" :
+            currentLikes === 1 ? "Liked by 1 person" :
+            `Liked by ${currentLikes} people`;
+
+        fetch(`/like-post?post_id=${postId}`)
             .then(res => res.json())
             .then(data => {
+                // optional sync (in case mismatch)
+                likesEl.innerText =
+                    data.likes === 0 ? "No likes" :
+                    data.likes === 1 ? "Liked by 1 person" :
+                    `Liked by ${data.likes} people`;
 
-                // update text
-                console.log(data);
-                let text = "";
-                if (data.likes == 0) text = "No likes";
-                else if (data.likes == 1) text = "Liked by 1 person";
-                else text = `Liked by ${data.likes} people`;
-
-                document.getElementById(`likes-${postId}`).innerText = text;
-
-                // update color
-                let btn = document.getElementById(`like-btn-${postId}`);
                 btn.style.color = data.liked ? "blue" : "black";
-
-                isProcessing = false;
+            })
+            .catch(() => {
+                console.log("Like failed");
             });
-        }
+    }
     </script>
     <script>
         const searchBox = document.getElementById('searchBox');
@@ -796,11 +853,18 @@
         let image = new Image();
 
         document.getElementById("imageInput").onchange = function(e){
-            let reader = new FileReader();
-            reader.onload = function(event){
-                image.src = event.target.result;
+            let file = e.target.files[0];
+
+            if(file){
+                // change label text
+                this.parentElement.innerText = "✅ " + file.name;
+
+                let reader = new FileReader();
+                reader.onload = function(event){
+                    image.src = event.target.result;
+                }
+                reader.readAsDataURL(file);
             }
-            reader.readAsDataURL(e.target.files[0]);
         };
 
         function drawText(ctx, text, x, y, maxWidth){

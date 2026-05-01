@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from core.models import Profile
 from itertools import chain
 from .models import FavouritePost, ReportPost
-from django.db.models import Case, When, Value, IntegerField
+from django.db.models import Case, When, Value, IntegerField, F
 from django.shortcuts import get_object_or_404
 import base64
 from django.core.files.base import ContentFile
@@ -127,20 +127,18 @@ def like_post(request):
     username = request.user.username
     post_id = request.GET.get('post_id')
 
-    post = Post.objects.get(id=post_id)
+    like = LikePost.objects.filter(post_id=post_id, username=username).first()
 
-    like_filter = LikePost.objects.filter(post_id=post_id, username=username).first()
-
-    if like_filter is None:
+    if like is None:
         LikePost.objects.create(post_id=post_id, username=username)
-        post.no_of_likes += 1
-        post.save()
+        Post.objects.filter(id=post_id).update(no_of_likes=F('no_of_likes') + 1)
         liked = True
     else:
-        like_filter.delete()
-        post.no_of_likes -= 1
-        post.save()
+        like.delete()
+        Post.objects.filter(id=post_id).update(no_of_likes=F('no_of_likes') - 1)
         liked = False
+
+    post = Post.objects.get(id=post_id)
 
     return JsonResponse({
         'likes': post.no_of_likes,
@@ -368,3 +366,5 @@ def logout(request):
     auth.logout(request)
     return redirect('signin')
 
+def ping(request):
+    return HttpResponse("OK")
