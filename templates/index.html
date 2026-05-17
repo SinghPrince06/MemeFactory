@@ -50,7 +50,7 @@
 
             <header class="modern-header">
                 <div class="header_inner">
-                    <form action="/search/" method="GET" style="display:flex; align-items:center; gap:10px;">
+                    <form onsubmit="return handleSearchSubmit(event)" style="display:flex; align-items:center; gap:10px;">
                         <div style="position: relative; width: 300px;">
                             
                             <input type="text" id="searchBox" name="username"
@@ -1109,6 +1109,45 @@
             }
 
         </script>
+        <script>
+
+            function handleSearchSubmit(event){
+
+                event.preventDefault();
+
+                let input =
+                    document.getElementById("searchBox");
+
+                let username =
+                    input.value.trim();
+
+                if(username.length === 0){
+                    return false;
+                }
+
+                fetch(`/search-ajax/?q=${username}`)
+
+                .then(response => response.json())
+
+                .then(data => {
+
+                    let exactUser = data.find(
+                        user =>
+                        user.username.toLowerCase()
+                        === username.toLowerCase()
+                    );
+
+                    if(exactUser){
+
+                        window.location.href =
+                            `/profile/${exactUser.username}/`;
+                    }
+                });
+
+                return false;
+            }
+
+            </script>
 
 </body>
 
