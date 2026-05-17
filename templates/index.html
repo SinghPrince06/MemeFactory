@@ -21,7 +21,7 @@
     </style>
 </head>
 
-<body>
+<body class="home-page">
 
             {% if messages %}
                 <div id="message-container" style="
@@ -48,29 +48,45 @@
             {% endif %}
 
 
-            <header>
+            <header class="modern-header">
                 <div class="header_inner">
                     <form action="/search/" method="GET" style="display:flex; align-items:center; gap:10px;">
                         <div style="position: relative; width: 300px;">
                             
                             <input type="text" id="searchBox" name="username"
-                                placeholder="MemeFactory: Search username..."
+                                placeholder="Search creators...."
                                 autocomplete="off"
-                                style="width:100%; padding:8px;">
+                                style="
+                                        width:370px;
+                                        height:54px;
 
-                            <div id="searchResults" 
-                                style="position:absolute; top:100%; left:0; width:100%; background:white; border:1px solid #ccc; display:none; z-index:1000;">
+                                        padding:0 22px;
+
+                                        border-radius:18px;
+
+                                        background:rgba(255,255,255,0.06);
+
+                                        border:1px solid rgba(255,255,255,0.08);
+
+                                        color:white;
+
+                                        font-size:16px;
+
+                                        backdrop-filter:blur(12px);
+
+                                        transition:0.25s ease;
+                            ">
+
+                            <div id="searchResults"
+                                class="search-results-box">
                             </div>
 
                         </div>
 
-                            <button type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
                     </form>
-                    <div class="right-side lg:pr-4">
+                    <div class="right-side lg:pr-4 flex items-center gap-5">
                          <!-- upload -->
-                        <a href="#" class="bg-pink-500 flex font-bold hover:bg-pink-600 hover:text-black text-white px-4 py-2 rounded">
+                        <a href="#" class="upload-btn">
                             <ion-icon name="add-circle" class="-mb-1
                              mr-1 opacity-90 text-xl uilus-circle"></ion-icon> Upload Memes
                         </a>
@@ -109,7 +125,9 @@
                                         background:#fafafa;
                                         margin-top:10px;
                                     ">
-                                        📤 Click to upload image
+                                        <span id="uploadText">
+                                            📤 Click to upload image
+                                        </span>
                                         <input type="file" id="imageInput" name="upload_image" accept="image/*" style="display:none;">
                                     </label>
 
@@ -203,62 +221,6 @@
                             </div>
                         </div>
                         
-                         <!-- Notification -->
-
-                        <!-- <a href="#" class="header-links-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M12 22a2.02 2.02 0 0 1-2.01-2h4a2.02 2.02 0 0 1-.15.78a2.042 2.042 0 0 1-1.44 1.18h-.047A1.922 1.922 0 0 1 12 22zm8-3H4v-2l2-1v-5.5a8.065 8.065 0 0 1 .924-4.06A4.654 4.654 0 0 1 10 4.18V2h4v2.18c2.579.614 4 2.858 4 6.32V16l2 1v2z" fill="currentColor"/></g></svg>
-                        </a>
-                        <div uk-drop="mode: click;offset: 4" class="header_dropdown">
-                            <h4
-                                class="-mt-5 -mx-5 bg-gradient-to-t from-gray-100 to-gray-50 border-b font-bold px-6 py-3">
-                                Notification </h4>
-                            <ul class="dropdown_scrollbar" data-simplebar>
-                                <li>
-                                    <a href="#">
-                                        <div class="drop_avatar"> <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="">
-                                        </div>
-                                        <div class="drop_content">
-                                            <p> <strong class="text-link" >Taiye</strong>  
-                                                <span class="text-link"> is following you  </span>
-                                            </p>
-                                            <span class="time-ago"> 2 hours ago </span>
-                                        </div>
-                                    </a>
-                                </li>
-                                
-
-                            </ul>
-                            <a href="#" class="see-all">See all</a>
-                        </div> -->
-
-                        <!-- Messages -->
-
-                        <!-- <a href="#" class="header-links-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="0.5em" height="0.5em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16"><g fill="currentColor"><path d="M2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/></g></svg>
-                        </a>
-                        <div uk-drop="mode: click;offset: 4" class="header_dropdown">
-                            <h4
-                                class="-mt-5 -mx-5 bg-gradient-to-t from-gray-100 to-gray-50 border-b font-bold px-6 py-3">
-                                Messages </h4>
-                            <ul class="dropdown_scrollbar" data-simplebar>
-                                <li>
-                                    <a href="#">
-                                        <div class="drop_avatar"> <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="">
-                                        </div>
-                                        <div class="drop_content">
-                                            <strong> Taiye </strong> <time> 6:43 PM</time>
-                                            <p> hi tomi </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                
-
-
-                            </ul>
-                            <a href="#" class="see-all">See all</a>
-                        </div> -->
-
-                        <!-- profile -->
 
                         <a href="#">
                             {% if user_profile.profileimg %}
@@ -267,11 +229,32 @@
                                 <img src="{% static 'assets/images/avatar-1.jpg' %}" class="header-avatar" alt="">
                             {% endif %}
                         </a>
-                    <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
+                   <div uk-drop="mode: click;offset:12"
+                        class="modern-profile-dropdown">
+
                         <ul>
-                            <li><a href="/profile/{{ request.user.username }}/"> Account </a></li>
-                            <li><a href="/settings/"> Account setting </a></li>
-                            <li><a href="/logout/"> Log Out</a></li>
+
+                            <li>
+                                <a href="/profile/{{ request.user.username }}/">
+                                    <i class="uil-user"></i>
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/settings/">
+                                    <i class="uil-cog"></i>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <button onclick="openLogoutModal()">
+                                    <i class="uil-signout"></i>
+                                    <span>Log Out</span>
+                                </button>
+                            </li>
+
                         </ul>
                     </div>
 
@@ -290,7 +273,7 @@
 
                         <!-- post 1-->
                          {% for post in posts %}
-                        <div class="bg-white shadow rounded-md  -mx-2 lg:mx-0">
+                        <div class="meme-post-card -mx-2 lg:mx-0">
     
                             <!-- post header-->
                             <div class="flex justify-between items-center px-4 py-3">
@@ -313,7 +296,7 @@
                                 </div>
                               <div>
                                 <a href="#"> <i class="icon-feather-more-horizontal text-2xl hover:bg-gray-200 rounded-full p-2 transition -mr-1 "></i> </a>
-                                <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-gray-500 hidden text-base border border-gray-100" uk-drop="mode: click; pos: top-right">
+                                <div uk-drop="mode: click;pos: bottom-right" class="post-dropdown-menu">
                                     <ul class="space-y-1">
                                     <li>
                                         <button onclick="sharePost('{{ post.id }}')"
@@ -386,7 +369,7 @@
                                
                                 <div class="flex space-x-4 lg:font-bold">
 
-                                    <button id="like-btn-{{ post.id }}" onclick="likePost('{{ post.id }}')" class="flex items-center space-x-2">
+                                    <button id="like-btn-{{ post.id }}" class="like-button {% if post.id in liked_posts %}liked{% endif %}" onclick="likePost('{{ post.id }}')">
                                         <div class="p-2 rounded-full">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="25" height="25" class="">
                                                 <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
@@ -404,16 +387,6 @@
                                         
                                     </button>
 
-                                    <!-- comment icon -->
-
-                                    <!-- <a href="#" class="flex items-center space-x-2">
-                                        <div class="p-2 rounded-full text-black">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="25" height="25" class="">
-                                                <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                    
-                                    </a> -->
  
                                 </div>
                                 
@@ -422,38 +395,6 @@
                                     <a href="{% url 'profile' post.user %}"><strong>{{post.user}}</strong></a> {{post.caption}} 
                                 </p>
 
-                                    <!-- comment view box -->
-                                     
-                                <!-- <div class="border-t pt-4 space-y-4 ">
-                                    <div class="flex">
-                                        <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                            <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="" class="absolute h-full rounded-full w-full">
-                                        </div>
-                                        <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20   ">
-                                            <p class="leading-6">Y'all like billie eillish? <urna class="i uil-heart"></urna> <i
-                                                    class="uil-grin-tongue-wink"> </i> </p>
-                                            <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                            <img src="{% static 'assets/images/avatars/avatar-1.jpg' %}" alt="" class="absolute h-full rounded-full w-full">
-                                        </div>
-                                        <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 h-full relative lg:ml-5 ml-2 lg:mr-20   ">
-                                            <p class="leading-6">She's my favourite <i class="uil-grin-tongue-wink-alt"></i>
-                                            </p>
-                                            <div class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 "></div>
-                                        </div>
-                                    </div>
-                                </div> -->
-
-                                <!-- <div class="bg-gray-100 bg-gray-100 rounded-full rounded-md relative ">
-                                    <input type="text" placeholder="post a comment" class="bg-transparent max-h-10 shadow-none">
-                                    <div class="absolute bottom-0 flex h-full items-center right-0 right-3 text-xl space-x-2">
-                                        <a href="#"> <i class="uil-image"></i></a>
-                                        <a href="#"> <i class="uil-video"></i></a>
-                                    </div>
-                                </div> -->
     
                             </div>
     
@@ -463,9 +404,9 @@
                     </div>
 
                     <!-- right sidebar-->
-                    <div class="lg:w-5/12">
+                    <div class="lg:w-5/12 suggestion-wrapper">
 
-                        <div class="bg-white  shadow-md rounded-md overflow-hidden">
+                        <div class="suggestion-card">
 
                             <div class="bg-gray-50  border-b border-gray-100 flex items-baseline justify-between py-4 px-6 ">
                                 <h2 class="font-semibold text-lg">Users You Can Follow</h2>
@@ -541,16 +482,23 @@
     ">
 
         <div id="modalBox" style="
-            background:white;
+            background:#1e293b;
+            color:white;
             padding:25px;
-            border-radius:12px;
+            border-radius:16px;
             text-align:center;
             width:300px;
             transform: scale(0.7);
             opacity: 0;
             transition: all 0.25s ease;
+            box-shadow:0 20px 40px rgba(0,0,0,0.4);
         ">
-            <p style="margin-bottom:15px; font-weight:500;">
+            <p style="
+                margin-bottom:15px;
+                font-weight:600;
+                color:white;
+                font-size:16px;
+            ">
                 Are you sure you want to delete this post?
             </p>
 
@@ -581,7 +529,8 @@
 ">
 
     <div id="reportBox" style="
-        background:white;
+        background:#1e293b;
+        color:white;
         padding:25px;
         border-radius:12px;
         text-align:center;
@@ -595,8 +544,15 @@
 
         <textarea id="reportReason"
             placeholder="Enter reason (10–100 characters)"
-            style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; margin-bottom:10px;"></textarea>
-
+            style="
+            width:100%;
+            padding:8px;
+            border:1px solid #334155;
+            border-radius:6px;
+            margin-bottom:10px;
+            background:#0f172a;
+            color:white;
+        "></textarea>
         <button id="reportConfirmBtn"
             onclick="submitReport()"
             style="margin-right:10px; padding:6px 18px; background:#f59e0b; color:white; border:none; border-radius:6px;">
@@ -631,18 +587,28 @@
         function likePost(postId) {
         let likesEl = document.getElementById(`likes-${postId}`);
         let btn = document.getElementById(`like-btn-${postId}`);
+        if(btn.dataset.loading === "true"){
+            return;
+        }
+
+        btn.dataset.loading = "true";
 
         let currentText = likesEl.innerText;
         let currentLikes = parseInt(currentText.match(/\d+/)) || 0;
 
-        let alreadyLiked = btn.style.color === "blue";
+        let alreadyLiked = btn.classList.contains("liked");
 
         if (alreadyLiked) {
+
             currentLikes--;
-            btn.style.color = "black";
+
+            btn.classList.remove("liked");
+
         } else {
+
             currentLikes++;
-            btn.style.color = "blue";
+
+            btn.classList.add("liked");
         }
 
         likesEl.innerText =
@@ -659,11 +625,23 @@
                     data.likes === 1 ? "Liked by 1 person" :
                     `Liked by ${data.likes} people`;
 
-                btn.style.color = data.liked ? "blue" : "black";
+                if(data.liked){
+
+                    btn.classList.add("liked");
+
+                }else{
+
+                    btn.classList.remove("liked");
+                }
+
+                btn.dataset.loading = "false";
             })
-            .catch(() => {
-                console.log("Like failed");
-            });
+            .catch(error => {
+
+                console.log(error);
+
+                btn.dataset.loading = "false";
+            })
     }
     </script>
     <script>
@@ -689,14 +667,12 @@
                     } else {
                         data.forEach(user => {
                             resultsBox.innerHTML += `
-                                <div 
-                                    style="display:flex; align-items:center; gap:10px; padding:8px; cursor:pointer;"
-                                    onmouseover="this.style.background='#f2f2f2'"
-                                    onmouseout="this.style.background='white'"
+                                <div
+                                    class="search-result-user"
                                     onclick="goProfile('${user.username}')"
                                 >
-                                    <img src="${user.image}" width="35" height="35"
-                                        style="border-radius:50%; object-fit:cover;">
+                                    <img src="${user.image}"
+                                        class="search-result-avatar">
 
                                     <span>${user.username}</span>
                                 </div>
@@ -800,15 +776,23 @@
         }
 
         function submitReport() {
-            let reason = document.getElementById('reportReason').value.trim();
-            let btn = document.getElementById('reportConfirmBtn');
 
-            if (reason.length < 10) {
+            let reason =
+                document.getElementById('reportReason')
+                .value
+                .trim();
+
+            let btn =
+                document.getElementById('reportConfirmBtn');
+
+            if(reason.length < 10){
+
                 alert("Reason must be at least 10 characters");
                 return;
             }
 
-            if (reason.length > 100) {
+            if(reason.length > 100){
+
                 alert("Reason must be less than 100 characters");
                 return;
             }
@@ -816,19 +800,28 @@
             btn.innerText = "Sending...";
             btn.disabled = true;
 
-            let csrf = reportForm.querySelector('[name=csrfmiddlewaretoken]');
-            if (!csrf) {
+            let csrf =
+                reportForm.querySelector('[name=csrfmiddlewaretoken]');
+
+            if(!csrf){
+
                 csrf = document.createElement("input");
+
                 csrf.type = "hidden";
                 csrf.name = "csrfmiddlewaretoken";
-                csrf.value = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                csrf.value =
+                    document.querySelector(
+                        '[name=csrfmiddlewaretoken]'
+                    ).value;
+
                 reportForm.appendChild(csrf);
             }
 
-                reportForm.action = "/report-post/";
-                reportForm.method = "POST";
-                reportForm.submit();
-            }
+            reportForm.action = "/report-post/";
+            reportForm.method = "POST";
+
+            reportForm.submit();
         }
 
         function closeReportModal() {
@@ -859,7 +852,15 @@
             let file = e.target.files[0];
 
             if(file){
-                this.parentElement.childNodes[0].nodeValue = "✅ " + file.name;
+                let fileName = file.name;
+
+                if(fileName.length > 22){
+                    fileName =
+                        fileName.substring(0, 20) + "...";
+                }
+
+                document.getElementById("uploadText")
+                    .innerText = "✅ " + fileName;
 
                 let reader = new FileReader();
                 reader.onload = function(event){
@@ -968,6 +969,147 @@
             alert("Link copied!");
         }
     </script>
+
+    <script>
+
+        let lastScrollTop = 0;
+
+        const navbar = document.querySelector(".modern-header");
+
+        window.addEventListener("scroll", function () {
+
+            let currentScroll =
+                window.pageYOffset ||
+                document.documentElement.scrollTop;
+
+            if(currentScroll > lastScrollTop){
+
+                /* SCROLL DOWN */
+
+                navbar.classList.add("hide-navbar");
+
+            } else {
+
+                /* SCROLL UP */
+
+                navbar.classList.remove("hide-navbar");
+            }
+
+            lastScrollTop = currentScroll <= 0
+                ? 0
+                : currentScroll;
+        });
+
+    </script>
+
+    <!-- LOGOUT MODAL -->
+
+        <div id="logoutModal" style="
+            display:none;
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.45);
+            backdrop-filter:blur(6px);
+            justify-content:center;
+            align-items:center;
+            z-index:3000;
+        ">
+
+            <div id="logoutBox" style="
+                background:#1e293b;
+                color:white;
+                width:320px;
+                padding:28px;
+                border-radius:18px;
+                text-align:center;
+                transform:scale(0.7);
+                opacity:0;
+                transition:all 0.25s ease;
+            ">
+
+                <p style="
+                    color:rgba(255,255,255,0.65);
+                    margin-bottom:22px;
+                ">
+                    Are you sure you want to leave MemeFactory?
+                </p>
+
+                <div style="
+                    display:flex;
+                    justify-content:center;
+                    gap:12px;
+                ">
+
+                    <button onclick="closeLogoutModal()"
+                        style="
+                        padding:10px 18px;
+                        border:none;
+                        border-radius:10px;
+                        background:#334155;
+                        color:white;
+                    ">
+                        Cancel
+                    </button>
+
+                    <a href="/logout/"
+                        style="
+                        padding:10px 18px;
+                        border-radius:10px;
+                        background:#ef4444;
+                        color:white;
+                        text-decoration:none;
+                    ">
+                        Log Out
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+
+            function openLogoutModal(){
+
+                let modal =
+                    document.getElementById('logoutModal');
+
+                let box =
+                    document.getElementById('logoutBox');
+
+                modal.style.display = 'flex';
+
+                setTimeout(() => {
+
+                    box.style.transform = 'scale(1)';
+                    box.style.opacity = '1';
+
+                }, 10);
+            }
+
+            function closeLogoutModal(){
+
+                let modal =
+                    document.getElementById('logoutModal');
+
+                let box =
+                    document.getElementById('logoutBox');
+
+                box.style.transform = 'scale(0.7)';
+                box.style.opacity = '0';
+
+                setTimeout(() => {
+
+                    modal.style.display = 'none';
+
+                }, 200);
+            }
+
+        </script>
+
 </body>
 
 

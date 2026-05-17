@@ -16,71 +16,72 @@
 
 </head>
 
-<body>
-
-
-       
-
-          
+<body class="settings-page">
 
             <div class="container m-auto"> 
 
-                <h1 class="text-2xl leading-none text-gray-900 tracking-tight mt-3"><a href="/">Home</a> / Account Setting for <b>@{{user.username}}</b> </h1>
-                <!-- <ul class="mt-5 -mr-3 flex-nowrap lg:overflow-hidden overflow-x-scroll uk-tab">
-                    <li class="uk-active"><a href="#">General</a></li>
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="#">Privacy</a></li>
-                    <li><a href="#">Notification</a></li>
-                    <li><a href="#">Social links</a></li>
-                    <li><a href="#">Billing</a></li>
-                    <li><a href="#">Security</a></li>
-                </ul> -->
-                <br>
+                <div class="settings-header">
+                    <h1 class="settings-title">
+                        <i class="icon-feather-settings"></i>
+                        Account Settings
+                    </h1>
+
+                    <p class="settings-subtitle">
+                        Customize your MemeFactory identity for @{{user.username}}
+                    </p>
+                </div>
                 <hr>
+                
 
                 <div class="grid lg:grid-cols-3 mt-12 gap-8">
                     <div>
-                        <h3 class="text-xl mb-2"> General </h3>
+                        <h3 class="settings-section-title">
+                            <i class="icon-feather-user"></i>
+                            General
+                        </h3>
+
+                        <p class="settings-section-subtitle">
+                            Manage your public profile and personal details
+                        </p>
                         <p></p>
                     </div>
-                    <div class="bg-white rounded-md lg:shadow-lg shadow col-span-2">
-                        <form action="" method="POST" enctype="multipart/form-data">
+                    <div class="settings-card col-span-2">
+                        <form id="settingsForm" action="" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="grid grid-cols-2 gap-3 lg:p-6 p-4">
                                 
                                     <div class="col-span-2">
                                         <label for=""> Profile Picture</label>
                                         <!-- <img width="100" height="100" src="{{user_profile.profileimg.url}}" > -->
-                                        <img src="{{ user_profile.profileimg.url }}" style="width:100px; height:100px; object-fit:cover;">
-                                        <input type="file" name='image' value="" placeholder="" class="shadow-none bg-gray-100">
+                                        <img src="{{ user_profile.profileimg.url }}"
+                                            class="profile-preview">
+                                        <label class="custom-upload">
+                                            <i class="icon-feather-upload"></i>
+                                            Upload Image
+                                            <input type="file" name="image" hidden>
+                                        </label>
                                     </div>
                                     <div class="col-span-2">
                                         <label> Banner</label>
-                                        <img src="{{ user_profile.banner.url }}" style="width:100%; height:150px; object-fit:cover;">
-                                        <input type="file" name="banner" class="shadow-none bg-gray-100">
+                                        <img src="{{ user_profile.banner.url }}"
+                                            class="banner-preview">
+                                        <label class="custom-upload">
+                                            <i class="icon-feather-image"></i>
+                                            Upload Banner
+                                            <input type="file" name="banner" hidden>
+                                        </label>
                                     </div>
                                     <div class="col-span-2">
                                         <label for="about"> Bio </label>  
-                                        <textarea id="bio" name="bio" rows="3"  class="shadow-none bg-gray-100">{{user_profile.bio}}</textarea>
+                                        <textarea id="bio" name="bio" rows="3"  class="settings-input">{{user_profile.bio}}</textarea>
                                     </div> 
                                     <div class="col-span-2">
                                         <label for=""> Location</label>
-                                        <input type="text" name='location' value="{{user_profile.location}}" placeholder="" class="shadow-none bg-gray-100">
+                                        <input type="text" name='location' value="{{user_profile.location}}" placeholder="" class="settings-input">
                                     </div>
-                                    <!-- <div>
-                                    <label for=""> Working at</label>
-                                    <input type="text" placeholder="" class="shadow-none bg-gray-100">
-                                    </div>  -->
                                     <div>
                                     <label for=""> Relationship </label>
-                                    <!-- <select id="relationship" name="relationship"  class="shadow-none bg-gray-100">
-                                        <option value="0">None</option>
-                                        <option value="1">Single</option>
-                                        <option value="2">Mingle</option>
-                                        <option value="3">Married</option>
-                                        <option value="4">Engaged</option>
-                                    </select> -->
-                                    <select id="relationship" name="relationship" class="shadow-none bg-gray-100">
+                                    <select id="relationship" name="relationship" class="settings-input">
                                         <option value="0" {% if user_profile.relationship == "0" %}selected{% endif %}>None</option>
                                         <option value="1" {% if user_profile.relationship == "1" %}selected{% endif %}>Single</option>
                                         <option value="2" {% if user_profile.relationship == "2" %}selected{% endif %}>Mingle</option>
@@ -91,68 +92,47 @@
                             </div> 
             
                             <div class="bg-gray-10 p-6 pt-0 flex justify-end space-x-3">
-                                <a href="/" class="p-2 px-4 rounded bg-gray-50 text-red-500">Cancel</a>
-                                <button type="submit" class="button bg-blue-700"> Save </button>
+                                <button type="button"
+                                        class="cancel-btn"
+                                        id="cancelButton">
+                                    Cancel
+                                </button>
+
+                                <!-- CANCEL MODAL -->
+
+                                <div id="cancelModal" class="cancel-modal">
+
+                                    <div class="cancel-modal-box">
+
+                                        <h2>Discard Changes?</h2>
+
+                                        <p>
+                                            Your unsaved profile changes will be lost.
+                                            Are you sure you want to leave settings?
+                                        </p>
+
+                                        <div class="cancel-modal-actions">
+
+                                            <button type="button"
+                                                class="stay-btn"
+                                                onclick="closeCancelModal()">
+                                                Stay Here
+                                            </button>
+
+                                            <a href="/" class="discard-btn">
+                                                Yes, Leave
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <button type="submit" class="save-btn"> Save </button>
                         </form>
                     </div>
     
-                    <!-- </div>
-
-                    <div>
-                        <h3 class="text-xl mb-2"> Privacy</h3>
-                        <p> </p>
-                    </div>
-                    <div class="bg-white rounded-md lg:shadow-lg shadow lg:p-6 p-4 col-span-2">
-
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h4> Who can follow me ?</h4>
-                                <div>  </div>
-                            </div>
-                            <div class="switches-list -mt-8 is-large">
-                                <div class="switch-container">
-                                    <label class="switch"><input type="checkbox"><span class="switch-button"></span> </label>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h4> Show my activities ?</h4>
-                                <div>  </div>
-                            </div>
-                            <div class="switches-list -mt-8 is-large">
-                                <div class="switch-container">
-                                    <label class="switch"><input type="checkbox" checked><span class="switch-button"></span> </label>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h4> Search engines?</h4>
-                                <div>  </div>
-                            </div>
-                            <div class="switches-list -mt-8 is-large">
-                                <div class="switch-container">
-                                    <label class="switch"><input type="checkbox"><span class="switch-button"></span> </label>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h4> Allow Commenting?</h4>
-                                <div>  </div>
-                            </div>
-                            <div class="switches-list -mt-8 is-large">
-                                <div class="switch-container">
-                                    <label class="switch"><input type="checkbox"><span class="switch-button"></span> </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
     
                     </div>
                     <br>
@@ -175,6 +155,66 @@
     <script src="{% static 'assets/js/uikit.js' %}"></script>
     <script src="{% static 'assets/js/simplebar.js' %}"></script>
     <script src="{% static 'assets/js/custom.js' %}"></script>
+
+    <script>
+
+        const form = document.getElementById("settingsForm");
+        const cancelBtn = document.getElementById("cancelButton");
+        const modal = document.getElementById("cancelModal");
+
+        /* TRACK REAL FORM CHANGES */
+
+        let initialFormData = new FormData(form);
+
+        function hasFormChanged() {
+
+            let currentFormData = new FormData(form);
+
+            for (let pair of initialFormData.entries()) {
+
+                const key = pair[0];
+                const initialValue = pair[1];
+                const currentValue = currentFormData.get(key);
+
+                if (initialValue != currentValue) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /* CANCEL BUTTON */
+
+        cancelBtn.addEventListener("click", function(e){
+
+            e.preventDefault();
+
+            /* NO CHANGES → GO HOME DIRECTLY */
+
+            if(!hasFormChanged()){
+                window.location.href = "/";
+                return;
+            }
+
+            /* SHOW MODAL */
+
+            modal.classList.add("active");
+        });
+
+        /* CLOSE MODAL */
+
+        function closeCancelModal(){
+            modal.classList.remove("active");
+        }
+
+        /* CLEAR MODAL STATE ON PAGE LOAD/BACK */
+
+        window.addEventListener("pageshow", function(){
+            modal.classList.remove("active");
+        });
+
+    </script>
 
 
     <script src="{% static '../../unpkg.com/ionicons%405.2.3/dist/ionicons.js' %}"></script>

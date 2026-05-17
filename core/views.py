@@ -30,6 +30,10 @@ def index(request):
         follower=user
     ).values_list('user', flat=True)
 
+    liked_posts = LikePost.objects.filter(
+    username=user
+    ).values_list('post_id', flat=True)
+
     fav = FavouritePost.objects.filter(user=user).first()
     user_favourite_post_id = fav.post_id if fav else None
 
@@ -62,6 +66,7 @@ def index(request):
         'suggestions_username_profile_list': suggestions,
         'following_users': following,
         'user_favourite_post_id': user_favourite_post_id,
+        'liked_posts': liked_posts,
     })
 
 import uuid
@@ -235,9 +240,7 @@ def profile(request, pk):
         'user_followers': user_followers,
         'user_following': user_following,
     }
-    return render(request, 'profile.html', {
-        'user_profile': user_profile,
-    }, context)
+    return render(request, 'profile.html', context)
 
 @login_required(login_url='signin')
 def follow(request):
@@ -269,13 +272,13 @@ def settings(request):
         # Profile image
         if request.FILES.get('image'):
             user_profile.profileimg = request.FILES.get('image')
-
-        # ✅ ADD THIS (banner)
+        
+        #banner
         if request.FILES.get('banner'):
             user_profile.banner = request.FILES.get('banner')
 
         user_profile.save()
-        return redirect('profile', pk=request.user.username)
+        return redirect('/')
 
     return render(request, 'setting.html', {'user_profile': user_profile})
 
